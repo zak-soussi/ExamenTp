@@ -1,22 +1,54 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.css') }}">
-    <title>Document</title>
-</head>
-<body>
-    {% for all in alls %}
-        <table class="table table-dark table-striped">
-            <tr>
-                <td>all.nom</td>
+{% extends 'base.html.twig' %}
 
-                <td>all.prenom</td>
-            </tr>
-        </table>
-    {% endfor %}
-</body>
-</html>
+{% block title %}Liste des étudiants
+{% endblock %}
+
+{#{% block stylesheets %}#}
+{#    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet"/>#}
+{#{% endblock %}#}
+
+{% block body %}
+    <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+        <div class="dataTable-container">
+            <table id="datatablesSimple" class="dataTable-table">
+                <a href="{{path("etudiant.edit")}}">Ajouter une personne</a>
+                <thead>
+                <tr>
+                    <th data-sortable="" style="width: 19.5414%;">
+                        <a href="#" class="dataTable-sorter">Nom</a>
+                    </th>
+                    <th data-sortable="" style="width: 29.013%;">
+                        <a href="#" class="dataTable-sorter">Prenom</a>
+                    </th>
+                    <th data-sortable="" style="width: 24.7%;">
+                        <a href="#" class="dataTable-sorter">Section</a>
+                    </th>
+                    <th data-sortable="">
+                        <a href="#" class="dataTable-sorter">Action</a>
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for etudiant in etudiants %}
+                    <tr class="{{ loop.index is even ? "bg-success" : "bg-warning" }}">
+                        <td>{{etudiant.nom}}</td>
+                        <td>{{etudiant.prenom}}</td>
+                        <td>{{etudiant.section is same as null ?  "Non encore affecté" : etudiant.section.designation}}</td>
+                        <td>
+                            <a href="{{path("etudiant.edit", {id: etudiant.id })}}">Edit</a>
+                            |
+                            <a href="{{path("etudiant.delete", {id: etudiant.id })}}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+{% endblock %}
+
+{#{% block js %}#}
+{#    <script src="{{ asset('assets/js/script.js') }}"></script>#}
+{#{% endblock %}#}
