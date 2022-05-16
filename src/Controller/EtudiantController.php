@@ -47,14 +47,13 @@ class EtudiantController extends AbstractController
             $etudiant = new Etudiant();
         }
 
-        // $etudiant est l'image de notre formulaire
+
         $form = $this->createForm(EtudiantType::class, $etudiant);
-        // Mn formulaire va aller traiter la requete
+
         $form->handleRequest($request);
-        //Est ce que le formulaire a été soumis
+
         if($form->isSubmitted()) {
-            // si oui,
-            // on va ajouter l'objet Etudiant dans la base de données
+
             $manager = $doctrine->getManager();
             $manager->persist($etudiant);
 
